@@ -43,7 +43,7 @@ function getGitTags(): string[] {
 function getCommitsBetween(fromTag: string | null, toTag: string | null): string[] {
   try {
     let command = "git log --pretty=format:%s";
-    
+
     if (fromTag && toTag) {
       command += ` ${fromTag}..${toTag}`;
     } else if (fromTag) {
@@ -59,7 +59,7 @@ function getCommitsBetween(fromTag: string | null, toTag: string | null): string
       .trim()
       .split("\n")
       .filter((commit) => commit.length > 0);
-    
+
     return commits;
   } catch (error: any) {
     console.warn(`Failed to get commits: ${error.message}`);
@@ -254,7 +254,7 @@ export async function getVersion(): Promise<string> {
       encoding: "utf-8",
       cwd: rootDir,
     }).trim();
-    
+
     // Remove 'v' prefix if present
     return tag.replace(/^v/, "");
   } catch (error) {
@@ -268,4 +268,24 @@ export async function getVersion(): Promise<string> {
       return "1.0.0";
     }
   }
+}
+
+/**
+ * CLI entry point
+ */
+async function main() {
+  try {
+    const version = process.env.VERSION || (await getVersion());
+    const changelog = await generateChangelog({ version });
+    console.log(changelog);
+  } catch (error: any) {
+    console.error("Error generating changelog:", error.message);
+    process.exit(1);
+  }
+}
+
+// Run if called directly
+const isMainModule = import.meta.url === `file://${path.resolve(process.argv[1] || "")}`;
+if (isMainModule) {
+  main();
 }

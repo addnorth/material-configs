@@ -162,7 +162,8 @@ async function clearOutputDirs(outputBase: string, dryRun: boolean) {
 }
 
 async function build(options: BuildOptions) {
-  const version = await getVersion();
+  // Check for VERSION environment variable first (used in CI/CD)
+  const version = process.env.VERSION || (await getVersion());
 
   if (options.validateOnly) {
     const isValid = await validate();
