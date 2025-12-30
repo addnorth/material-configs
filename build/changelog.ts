@@ -202,12 +202,40 @@ export async function generateChangelog(
   let to: string | null = toTag || null;
 
   if (!from && !to) {
-    // Get the latest tag
+    // Get all tags sorted by version (newest first)
     const tags = getGitTags();
-    if (tags.length > 0) {
-      from = tags[0];
+
+    if (version) {
+      // If we have a version, find the current tag and previous tag
+      const currentTag = tags.find((tag) => {
+        const tagVersion = tag.replace(/^v/, "");
+        return tagVersion === version;
+      });
+
+      if (currentTag) {
+        const currentTagIndex = tags.indexOf(currentTag);
+        if (currentTagIndex < tags.length - 1) {
+          // There's a previous tag - get commits between previous and current
+          from = tags[currentTagIndex + 1];
+          to = currentTag;
+        } else {
+          // This is the first tag or only tag - get all commits up to this tag
+          to = currentTag;
+        }
+      } else {
+        // Tag not found in list, get commits since latest tag
+        if (tags.length > 0) {
+          from = tags[0];
+        }
+        to = `v${version}`;
+      }
+    } else {
+      // No version provided, get commits since latest tag
+      if (tags.length > 0) {
+        from = tags[0];
+      }
+      to = "HEAD";
     }
-    to = "HEAD";
   }
 
   // Get commits

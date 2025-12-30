@@ -8,6 +8,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import archiver from "archiver";
 import { createWriteStream } from "fs";
+import { execSync } from "child_process";
 import {
   getAllMaterials,
   getSlicersForMaterial,
@@ -42,7 +43,7 @@ export interface ManifestEntry {
   printer?: string;
   nozzle?: string;
   filename: string;
-  path: string;
+  url: string;
 }
 
 export interface Manifest {
@@ -137,8 +138,10 @@ async function createPrinterZip(
     archive.pipe(output);
 
     // Add all config files for this printer
+    // Reconstruct path from filename and slicer
     for (const config of configs) {
-      archive.file(config.path, { name: config.filename });
+      const filePath = path.join(outputDir, config.slicer, config.filename);
+      archive.file(filePath, { name: config.filename });
     }
 
     archive.finalize();
@@ -232,7 +235,7 @@ async function generateAllConfigs(
             printer: config.printer,
             nozzle: config.nozzle,
             filename: config.filename,
-            path: outputPath,
+            url: "", // Will be set in createManifest
           });
         }
 
@@ -264,6 +267,50 @@ async function generateAllConfigs(
 }
 
 /**
+ * Get GitHub repository info for generating release URLs
+ */
+function getGitHubRepoInfo(): { owner: string; repo: string } | null {
+  // Try to get from environment variable (GitHub Actions)
+  const repoEnv = process.env.GITHUB_REPOSITORY;
+  if (repoEnv) {
+    const [owner, repo] = repoEnv.split("/");
+    if (owner && repo) {
+      return { owner, repo };
+    }
+  }
+
+  // Try to get from git remote
+  try {
+    const remoteUrl = execSync("git config --get remote.origin.url", {
+      encoding: "utf-8",
+      cwd: rootDir,
+    }).trim();
+
+    // Parse git remote URL (handles both https and ssh formats)
+    const match = remoteUrl.match(/(?:github\.com[/:]|git@github\.com:)([^/]+)\/([^/]+?)(?:\.git)?$/);
+    if (match) {
+      return { owner: match[1], repo: match[2].replace(/\.git$/, "") };
+    }
+  } catch (error) {
+    // Git command failed, ignore
+  }
+
+  return null;
+}
+
+/**
+ * Generate GitHub release URL for a file
+ */
+function generateReleaseUrl(filename: string, version: string): string {
+  const repoInfo = getGitHubRepoInfo();
+  if (repoInfo) {
+    return `https://github.com/${repoInfo.owner}/${repoInfo.repo}/releases/download/v${version}/${filename}`;
+  }
+  // Fallback: return a placeholder URL if we can't determine the repo
+  return `https://github.com/OWNER/REPO/releases/download/v${version}/${filename}`;
+}
+
+/**
  * Create manifest.json
  */
 async function createManifest(
@@ -273,10 +320,17 @@ async function createManifest(
   options: ReleaseOptions = {}
 ): Promise<string> {
   const { dryRun = false } = options;
+
+  // Update configs to use URLs instead of empty strings
+  const configsWithUrls = configs.map((config) => ({
+    ...config,
+    url: generateReleaseUrl(config.filename, version),
+  }));
+
   const manifest: Manifest = {
     version,
     generated: new Date().toISOString(),
-    configs,
+    configs: configsWithUrls,
   };
 
   const manifestPath = path.join(

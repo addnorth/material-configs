@@ -35,6 +35,8 @@ jobs:
 
       - name: Generate changelog
         id: changelog
+        env:
+          VERSION: ${{ steps.get_version.outputs.VERSION }}
         run: |
           npm run changelog > changelog.txt
           echo "CHANGELOG<<EOF" >> $GITHUB_OUTPUT
