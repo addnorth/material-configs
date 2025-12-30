@@ -1,0 +1,4 @@
+
+> material-configuration@1.0.0 changelog
+> tsc && node dist/build/changelog.js
+

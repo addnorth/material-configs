@@ -1,0 +1,10 @@
+{
+  "printers": {
+    "MK4": {
+      "travel_speed": 200
+    },
+    "MK4IS": {
+      "travel_speed": 200
+    }
+  }
+}

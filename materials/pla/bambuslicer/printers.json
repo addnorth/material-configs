@@ -1,0 +1,13 @@
+{
+  "printers": {
+    "Bambu Lab X1": {
+      "chamber_temperatures": ["0"]
+    },
+    "Bambu Lab X1 Carbon": {
+      "chamber_temperatures": ["0"]
+    },
+    "Bambu Lab X1E": {
+      "chamber_temperatures": ["0"]
+    }
+  }
+}

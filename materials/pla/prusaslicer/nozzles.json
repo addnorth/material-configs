@@ -1,0 +1,14 @@
+{
+  "0.4mm": {
+    "perimeter_speed": 50,
+    "infill_speed": 60
+  },
+  "0.6mm": {
+    "perimeter_speed": 40,
+    "infill_speed": 50
+  },
+  "0.8mm": {
+    "perimeter_speed": 35,
+    "infill_speed": 45
+  }
+}

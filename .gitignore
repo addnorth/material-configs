@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+
+# Generated output
+output/
+dist/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+# .vscode/ - Allow .vscode/settings.json for team consistency
+.vscode/*
+!.vscode/settings.json
+.idea/
+*.swp
+*.swo
+
+# Environment
+.env
+.env.local
+
+# TypeScript
+*.tsbuildinfo
