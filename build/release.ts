@@ -106,7 +106,9 @@ async function createPrinterZip(
   options: ReleaseOptions = {}
 ): Promise<string> {
   const { dryRun = false, verbose = false } = options;
-  const zipFilename = `addnorth_${printer.replace(/\s+/g, "-")}_${version}.zip`;
+  // Strip 'v' prefix from version for filenames
+  const versionForFile = version.replace(/^v/, "");
+  const zipFilename = `addnorth_${printer.replace(/\s+/g, "-")}_${versionForFile}.zip`;
   const zipPath = path.join(outputDir, "zips", zipFilename);
 
   if (dryRun) {
@@ -302,11 +304,12 @@ function getGitHubRepoInfo(): { owner: string; repo: string } | null {
  */
 function generateReleaseUrl(filename: string, version: string): string {
   const repoInfo = getGitHubRepoInfo();
+  // Version should already include 'v' prefix (e.g., v0.0.1)
   if (repoInfo) {
-    return `https://github.com/${repoInfo.owner}/${repoInfo.repo}/releases/download/v${version}/${filename}`;
+    return `https://github.com/${repoInfo.owner}/${repoInfo.repo}/releases/download/${version}/${filename}`;
   }
   // Fallback: return a placeholder URL if we can't determine the repo
-  return `https://github.com/OWNER/REPO/releases/download/v${version}/${filename}`;
+  return `https://github.com/OWNER/REPO/releases/download/${version}/${filename}`;
 }
 
 /**
@@ -326,8 +329,10 @@ async function createManifest(
     url: generateReleaseUrl(config.filename, version),
   }));
 
+  // Strip 'v' prefix from version for manifest filename, but keep full version in manifest
+  const versionForFile = version.replace(/^v/, "");
   const manifest: Manifest = {
-    version,
+    version: versionForFile, // Store version without 'v' in manifest
     generated: new Date().toISOString(),
     configs: configsWithUrls,
   };
@@ -335,7 +340,7 @@ async function createManifest(
   const manifestPath = path.join(
     outputDir,
     "releases",
-    `manifest-${version}.json`
+    `manifest-${versionForFile}.json`
   );
 
   if (dryRun) {

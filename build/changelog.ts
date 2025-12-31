@@ -101,13 +101,11 @@ export async function generateChangelog(
     const tags = getGitTags();
 
     if (version) {
-      // If we have a version, find the current tag and previous tag
-      const currentTag = tags.find((tag) => {
-        const tagVersion = tag.replace(/^v/, "");
-        return tagVersion === version;
-      });
+      // Version should already include 'v' prefix (e.g., v0.0.1)
+      // Find the current tag
+      const currentTag = tags.find((tag) => tag === version) || version;
 
-      if (currentTag) {
+      if (tags.includes(currentTag)) {
         const currentTagIndex = tags.indexOf(currentTag);
         if (currentTagIndex < tags.length - 1) {
           // There's a previous tag - get commits between previous and current
@@ -122,7 +120,7 @@ export async function generateChangelog(
         if (tags.length > 0) {
           from = tags[0];
         }
-        to = `v${version}`;
+        to = version; // Use version as-is (should already have 'v' prefix)
       }
     } else {
       // No version provided, get commits since latest tag
@@ -137,10 +135,11 @@ export async function generateChangelog(
   const commits = getCommitsBetween(from, to);
 
   if (commits.length === 0) {
-    return `## [${version || "Unreleased"}]\n\nNo changes.\n`;
+    const displayVersion = version || "Unreleased";
+    return `## [${displayVersion}]\n\nNo changes.\n`;
   }
 
-  // Generate markdown
+  // Generate markdown (version should already include 'v' prefix)
   return generateChangelogMarkdown(version || "Unreleased", commits, options);
 }
 
@@ -178,17 +177,19 @@ export async function getVersion(): Promise<string> {
       cwd: rootDir,
     }).trim();
 
-    // Remove 'v' prefix if present
-    return tag.replace(/^v/, "");
+    // Return tag as-is (should include 'v' prefix)
+    return tag;
   } catch (error) {
-    // Fall back to package.json
+    // Fall back to package.json and add 'v' prefix
     try {
       const packageJsonPath = path.join(rootDir, "package.json");
       const packageJsonContent = await fs.readFile(packageJsonPath, "utf-8");
       const packageJson = JSON.parse(packageJsonContent);
-      return packageJson.version || "1.0.0";
+      const version = packageJson.version || "1.0.0";
+      // Ensure 'v' prefix is present
+      return version.startsWith("v") ? version : `v${version}`;
     } catch (error) {
-      return "1.0.0";
+      return "v1.0.0";
     }
   }
 }
