@@ -115,11 +115,11 @@ export async function generateChangelog(
           to = currentTag;
         }
       } else {
-        // Tag not found in list, get commits since latest tag
+        // Tag not found in list (new version, not created yet), get commits since latest tag to HEAD
         if (tags.length > 0) {
           from = tags[0];
         }
-        to = version; // Use version as-is (should already have 'v' prefix)
+        to = "HEAD"; // Use HEAD since the tag doesn't exist yet
       }
     } else {
       // No version provided, get commits since latest tag
