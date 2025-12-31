@@ -1,7 +1,7 @@
 {
-  "name": "material-configuration",
+  "name": "material-configs",
   "version": "1.0.0",
-  "description": "Material configuration system for generating slicer configs",
+  "description": "Material configs system for generating slicer configs",
   "type": "module",
   "main": "dist/scripts/build.js",
   "scripts": {

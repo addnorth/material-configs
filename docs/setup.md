@@ -5,6 +5,7 @@ This guide will help you set up the material configuration system on your comput
 ## Prerequisites
 
 You'll need:
+
 - A computer (Windows, Mac, or Linux)
 - Internet connection
 - Basic file editing skills
@@ -32,6 +33,7 @@ Node.js is the software that runs the build scripts.
 ### Linux
 
 Open a terminal and run:
+
 ```bash
 curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
 sudo apt-get install -y nodejs
@@ -40,6 +42,7 @@ sudo apt-get install -y nodejs
 ### Verify Installation
 
 Open a terminal (or Command Prompt on Windows) and type:
+
 ```bash
 node --version
 npm --version
@@ -66,11 +69,11 @@ You should see version numbers. If you see an error, Node.js is not installed co
    ```
 3. Clone the repository:
    ```bash
-   git clone https://github.com/your-org/material-configuration.git
+   git clone https://github.com/addnorth/material-configs.git
    ```
 4. Go into the folder:
    ```bash
-   cd material-configuration
+   cd material-configs
    ```
 
 ## Step 3: Install Dependencies
@@ -86,11 +89,13 @@ This will download all the required software packages. It may take a few minutes
 ## Step 4: Test the Setup
 
 Run a test build:
+
 ```bash
 npm run build -- --dry-run --verbose
 ```
 
 You should see output showing what would be generated. If you see errors, check:
+
 - Node.js is installed correctly
 - You're in the correct folder
 - Dependencies were installed
@@ -98,6 +103,7 @@ You should see output showing what would be generated. If you see errors, check:
 ## Step 5: Understanding the Output
 
 After running `npm run build`, you'll find generated files in:
+
 - `output/prusaslicer/` - PrusaSlicer config files
 - `output/bambuslicer/` - Bambu Slicer config files
 - `output/zips/` - Zip files (when using `--release`)
@@ -116,6 +122,7 @@ After running `npm run build`, you'll find generated files in:
 ### Adding Overrides
 
 Create override files in:
+
 - `materials/{material}/{slicer}/nozzles.json` - Nozzle-specific settings
 - `materials/{material}/{slicer}/printers.json` - Printer-specific settings
 - `materials/{material}/{slicer}/combinations/{printer}-{nozzle}.json` - Specific combinations
@@ -125,11 +132,13 @@ Create override files in:
 Before committing changes:
 
 1. Validate your configs:
+
    ```bash
    npm run validate
    ```
 
 2. Test build:
+
    ```bash
    npm run build -- --material your-material --verbose
    ```
@@ -164,6 +173,7 @@ Before committing changes:
 ## Next Steps
 
 Once setup is complete:
+
 1. Read the [Structure Guide](structure.md) to understand the file organization
 2. Read the [Contributing Guide](contributing.md) for best practices
 3. Start editing material configs!

@@ -34,6 +34,7 @@ todos:
     status: pending
   - id: implement-validator
     content: Build build/validate.js to validate JSON/INI syntax and required fields with clear error messages
+    status: pending
   - id: implement-changelog-generator
     content: Build build/changelog.js to generate changelog from git commits and update CHANGELOG.md
     status: pending

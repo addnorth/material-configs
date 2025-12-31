@@ -49,7 +49,7 @@ See [docs/setup.md](docs/setup.md) for a detailed setup guide.
 ## Project Structure
 
 ```
-material-configuration/
+material-configs/
 ├── materials/          # Material configs (organized by slicer)
 │   └── {material}/
 │       ├── bambuslicer/
@@ -61,7 +61,7 @@ material-configuration/
 │           ├── nozzles.json   # Nozzle overrides
 │           └── printers.json  # Printer overrides
 ├── build/              # Build scripts (TypeScript)
-├── config/             # Build configuration
+├── config/             # Build configs
 ├── output/             # Generated configs (gitignored)
 ├── scripts/            # CLI scripts
 ├── docs/               # Documentation

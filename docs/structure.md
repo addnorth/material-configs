@@ -5,7 +5,7 @@ This document explains the organization of the material configuration repository
 ## Overview
 
 ```
-material-configuration/
+material-configs/
 ├── materials/              # Material base configs (slicer-native formats)
 ├── build/                  # Build scripts and logic (TypeScript)
 ├── config/                 # Build configuration and metadata
@@ -47,6 +47,7 @@ materials/
 Override files use JSON format and are organized by slicer:
 
 - **nozzles.json**: Contains all nozzle sizes in one file
+
   ```json
   {
     "0.4mm": { "perimeter_speed": 50 },
@@ -55,6 +56,7 @@ Override files use JSON format and are organized by slicer:
   ```
 
 - **printers.json**: Printer-specific overrides
+
   ```json
   {
     "Prusa MK4": { "travel_speed": 200 }
