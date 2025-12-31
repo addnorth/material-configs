@@ -1,0 +1,7 @@
+{
+  "recommendations": [
+    "mohsen1.prettify-json",
+    "davidanson.vscode-markdownlint"
+  ],
+  "unwantedRecommendations": []
+}

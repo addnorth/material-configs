@@ -1,0 +1,11 @@
+{
+  "0.4mm": {
+    "filament_max_volumetric_speed": ["14", "14"]
+  },
+  "0.6mm": {
+    "filament_max_volumetric_speed": ["18", "18"]
+  },
+  "0.8mm": {
+    "filament_max_volumetric_speed": ["22", "22"]
+  }
+}

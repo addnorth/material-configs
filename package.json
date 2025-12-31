@@ -1,0 +1,34 @@
+{
+  "name": "material-configs",
+  "version": "1.0.0",
+  "description": "Material configs system for generating slicer configs",
+  "type": "module",
+  "main": "dist/scripts/build.js",
+  "scripts": {
+    "build": "tsc && node dist/scripts/build.js",
+    "build:configs": "node dist/scripts/build.js",
+    "validate": "tsc && node dist/scripts/build.js --validate-only",
+    "changelog": "tsc && node dist/build/changelog.js",
+    "dev": "tsc --watch",
+    "lint": "npm run validate"
+  },
+  "keywords": [
+    "3d-printing",
+    "slicer",
+    "prusaslicer",
+    "bambuslicer",
+    "material-config"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "archiver": "^7.0.1",
+    "ini": "^4.1.1"
+  },
+  "devDependencies": {
+    "@types/archiver": "^6.0.2",
+    "@types/ini": "^1.3.4",
+    "@types/node": "^20.10.0",
+    "typescript": "^5.3.3"
+  }
+}

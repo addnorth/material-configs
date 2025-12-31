@@ -1,0 +1,45 @@
+{
+  "description": "Supported printer models and metadata",
+  "printers": {
+    "Prusa MK4": {
+      "name": "Original Prusa MK4",
+      "slicers": ["prusaslicer"],
+      "nozzles": ["0.4mm", "0.25mm", "0.3mm", "0.5mm", "0.6mm", "0.8mm"]
+    },
+    "Prusa MK4IS": {
+      "name": "Original Prusa MK4 Input Shaper",
+      "slicers": ["prusaslicer"],
+      "nozzles": ["0.4mm", "0.25mm", "0.3mm", "0.5mm", "0.6mm", "0.8mm"]
+    },
+    "Bambu Lab X1": {
+      "name": "Bambu Lab X1",
+      "slicers": ["bambuslicer"],
+      "nozzles": ["0.4mm", "0.6mm", "0.8mm"]
+    },
+    "Bambu Lab X1 Carbon": {
+      "name": "Bambu Lab X1 Carbon",
+      "slicers": ["bambuslicer"],
+      "nozzles": ["0.4mm", "0.6mm", "0.8mm"]
+    },
+    "Bambu Lab P1P": {
+      "name": "Bambu Lab P1P",
+      "slicers": ["bambuslicer"],
+      "nozzles": ["0.4mm", "0.6mm", "0.8mm"]
+    },
+    "Bambu Lab P1S": {
+      "name": "Bambu Lab P1S",
+      "slicers": ["bambuslicer"],
+      "nozzles": ["0.4mm", "0.6mm", "0.8mm"]
+    },
+    "Bambu Lab A1": {
+      "name": "Bambu Lab A1",
+      "slicers": ["bambuslicer"],
+      "nozzles": ["0.4mm", "0.6mm", "0.8mm"]
+    },
+    "Bambu Lab A1 mini": {
+      "name": "Bambu Lab A1 mini",
+      "slicers": ["bambuslicer"],
+      "nozzles": ["0.4mm", "0.6mm", "0.8mm"]
+    }
+  }
+}

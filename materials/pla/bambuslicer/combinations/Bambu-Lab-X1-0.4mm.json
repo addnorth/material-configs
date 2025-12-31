@@ -1,0 +1,5 @@
+{
+  "nozzle_temperature": ["240", "240"],
+  "nozzle_temperature_initial_layer": ["235", "235"],
+  "filament_max_volumetric_speed": ["16", "16"]
+}
