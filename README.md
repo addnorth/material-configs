@@ -4,7 +4,7 @@ Material configuration system for generating slicer configurations for add:north
 
 ## Download
 
-To download the latest released config files, go to [https://github.com/addnorth/material-configs/releases](releases) and select the package for your printer.
+To download the latest released config files, go to [releases](https://github.com/addnorth/material-configs/releases) and select the package for your printer.
 
 ## Overview
 
