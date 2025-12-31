@@ -98,7 +98,20 @@ npm run build -- --dry-run --verbose
 
 ## Releases
 
-Releases are automatically created when version tags are pushed:
+Releases are automatically created in two ways:
+
+### Automatic Release on PR Merge
+
+When a PR is merged to `main`, a release is automatically created:
+
+- Version is auto-incremented (patch version: v0.0.1 → v0.0.2)
+- Changelog is generated from commits since last release
+- Zip files and manifest are created
+- A git tag is created automatically
+
+### Manual Release with Tag
+
+You can also create a release by pushing a version tag:
 
 ```bash
 git tag v1.0.0
