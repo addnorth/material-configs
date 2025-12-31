@@ -55,8 +55,7 @@ export interface ZipEntry {
 export interface Manifest {
   version: string;
   generated: string;
-  configs: ManifestEntry[];
-  zips: ZipEntry[];
+  configs: ZipEntry[];
 }
 
 /**
@@ -340,26 +339,18 @@ function generateReleaseUrl(filename: string, version: string): string {
  */
 async function createManifest(
   version: string,
-  configs: ManifestEntry[],
   zips: ZipEntry[],
   outputDir: string,
   options: ReleaseOptions = {}
 ): Promise<string> {
   const { dryRun = false } = options;
 
-  // Update configs to use URLs instead of empty strings
-  const configsWithUrls = configs.map((config) => ({
-    ...config,
-    url: generateReleaseUrl(config.filename, version),
-  }));
-
   // Strip 'v' prefix from version for manifest filename, but keep full version in manifest
   const versionForFile = version.replace(/^v/, "");
   const manifest: Manifest = {
     version: versionForFile, // Store version without 'v' in manifest
     generated: new Date().toISOString(),
-    configs: configsWithUrls,
-    zips,
+    configs: zips,
   };
 
   const manifestPath = path.join(
@@ -472,10 +463,9 @@ export async function buildRelease(options: ReleaseOptions = {}): Promise<{
     }
   }
 
-  // Update manifest with zip information
+  // Create manifest with zip information
   const manifestPath = await createManifest(
     version,
-    configs,
     zipEntries,
     outputDir,
     options
