@@ -21,7 +21,6 @@ import {
 } from "./generators/registry.js";
 import {
   generateChangelog,
-  updateChangelogFile,
   getVersion,
 } from "./changelog.js";
 
@@ -451,11 +450,6 @@ export async function buildRelease(options: ReleaseOptions = {}): Promise<{
 
   // Generate changelog
   const changelog = await generateChangelog({ version });
-
-  // Update CHANGELOG.md
-  if (!dryRun) {
-    await updateChangelogFile(version, changelog);
-  }
 
   return {
     version,

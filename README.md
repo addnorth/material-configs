@@ -39,7 +39,6 @@ See [docs/setup.md](docs/setup.md) for a detailed setup guide.
 - [Setup Guide](docs/setup.md) - Setup instructions for material experts
 - [Structure](docs/structure.md) - Directory structure and organization
 - [Contributing](docs/contributing.md) - Contribution guidelines
-- [Changelog](CHANGELOG.md) - Version history
 
 ## Project Structure
 

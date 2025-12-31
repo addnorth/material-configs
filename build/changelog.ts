@@ -1,5 +1,5 @@
 /**
- * Generates changelog from git commits and updates CHANGELOG.md
+ * Generates changelog from git commits
  */
 
 import fs from "fs/promises";
