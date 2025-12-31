@@ -45,10 +45,19 @@ export interface ManifestEntry {
   url: string;
 }
 
+export interface ZipEntry {
+  slicer: string; // Primary slicer (or comma-separated if multiple)
+  printer: string;
+  materials: string[];
+  filename: string;
+  url: string;
+}
+
 export interface Manifest {
   version: string;
   generated: string;
   configs: ManifestEntry[];
+  zips: ZipEntry[];
 }
 
 /**
@@ -104,19 +113,34 @@ async function createPrinterZip(
   version: string,
   outputDir: string,
   options: ReleaseOptions = {}
-): Promise<string> {
+): Promise<{ path: string; entry: ZipEntry }> {
   const { dryRun = false, verbose = false } = options;
   // Strip 'v' prefix from version for filenames
   const versionForFile = version.replace(/^v/, "");
   const zipFilename = `addnorth_${printer.replace(/\s+/g, "-")}_${versionForFile}.zip`;
   const zipPath = path.join(outputDir, "zips", zipFilename);
 
+  // Extract unique materials and slicers from configs
+  const materials = Array.from(new Set(configs.map((c) => c.material))).sort();
+  const slicers = Array.from(new Set(configs.map((c) => c.slicer))).sort();
+
+  // Use comma-separated slicers if multiple, otherwise single slicer
+  const slicer = slicers.join(", ");
+
+  const zipEntry: ZipEntry = {
+    slicer,
+    printer,
+    materials,
+    filename: zipFilename,
+    url: generateReleaseUrl(zipFilename, version),
+  };
+
   if (dryRun) {
     if (verbose) {
       console.log(`[DRY RUN] Would create zip: ${zipPath}`);
       console.log(`  Would include ${configs.length} config files`);
     }
-    return zipPath;
+    return { path: zipPath, entry: zipEntry };
   }
 
   await fs.mkdir(path.dirname(zipPath), { recursive: true });
@@ -129,7 +153,7 @@ async function createPrinterZip(
       if (verbose) {
         console.log(`Created zip: ${zipPath} (${archive.pointer()} bytes)`);
       }
-      resolve(zipPath);
+      resolve({ path: zipPath, entry: zipEntry });
     });
 
     archive.on("error", (err) => {
@@ -318,6 +342,7 @@ function generateReleaseUrl(filename: string, version: string): string {
 async function createManifest(
   version: string,
   configs: ManifestEntry[],
+  zips: ZipEntry[],
   outputDir: string,
   options: ReleaseOptions = {}
 ): Promise<string> {
@@ -335,6 +360,7 @@ async function createManifest(
     version: versionForFile, // Store version without 'v' in manifest
     generated: new Date().toISOString(),
     configs: configsWithUrls,
+    zips,
   };
 
   const manifestPath = path.join(
@@ -384,14 +410,6 @@ export async function buildRelease(options: ReleaseOptions = {}): Promise<{
     console.log(`Generated ${configs.length} config files`);
   }
 
-  // Create manifest
-  const manifestPath = await createManifest(
-    version,
-    configs,
-    outputDir,
-    options
-  );
-
   // Get all printers from config/printers.json
   const printersConfigPath = path.join(rootDir, "config", "printers.json");
   const printersConfig = JSON.parse(
@@ -426,6 +444,7 @@ export async function buildRelease(options: ReleaseOptions = {}): Promise<{
 
   // Create zip files per printer
   const zipPaths: string[] = [];
+  const zipEntries: ZipEntry[] = [];
   for (const printer of allPrinters) {
     // Get Bambu Slicer configs for this printer
     const printerConfigs = jsonConfigs.filter(
@@ -442,16 +461,26 @@ export async function buildRelease(options: ReleaseOptions = {}): Promise<{
 
     // Only create zip if there are configs for this printer
     if (allPrinterConfigs.length > 0) {
-      const zipPath = await createPrinterZip(
+      const zipResult = await createPrinterZip(
         printer,
         allPrinterConfigs,
         version,
         outputDir,
         options
       );
-      zipPaths.push(zipPath);
+      zipPaths.push(zipResult.path);
+      zipEntries.push(zipResult.entry);
     }
   }
+
+  // Update manifest with zip information
+  const manifestPath = await createManifest(
+    version,
+    configs,
+    zipEntries,
+    outputDir,
+    options
+  );
 
   // Generate changelog
   const changelog = await generateChangelog({ version });
