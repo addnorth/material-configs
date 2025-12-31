@@ -9,7 +9,8 @@
     "build:configs": "node dist/scripts/build.js",
     "validate": "tsc && node dist/scripts/build.js --validate-only",
     "changelog": "tsc && node dist/build/changelog.js",
-    "dev": "tsc --watch"
+    "dev": "tsc --watch",
+    "prepare": "husky"
   },
   "keywords": [
     "3d-printing",
@@ -21,13 +22,14 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "ini": "^4.1.1",
-    "archiver": "^7.0.1"
+    "archiver": "^7.0.1",
+    "ini": "^4.1.1"
   },
   "devDependencies": {
-    "@types/node": "^20.10.0",
-    "typescript": "^5.3.3",
+    "@types/archiver": "^6.0.2",
     "@types/ini": "^1.3.4",
-    "@types/archiver": "^6.0.2"
+    "@types/node": "^20.10.0",
+    "husky": "^9.1.7",
+    "typescript": "^5.3.3"
   }
 }

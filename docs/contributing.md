@@ -6,9 +6,11 @@ Thank you for contributing to the material configuration system!
 
 1. Read the [Setup Guide](setup.md) to set up your environment
 2. Read the [Structure Guide](structure.md) to understand the organization
-3. Make your changes
-4. Test your changes
-5. Submit a pull request
+3. **Read the Commit Messages section below** - Commit messages are strictly enforced
+4. **Create a branch** - Never commit directly to `main` (see Pull Request Process below)
+5. Make your changes
+6. Test your changes
+7. Submit a pull request to `main`
 
 ## Adding a New Material
 
@@ -66,16 +68,19 @@ Example: `materials/pla/bambuslicer/combinations/Bambu-Lab-X1-0.4mm.json`
 Before submitting:
 
 1. **Validate syntax**:
+
    ```bash
    npm run validate
    ```
 
 2. **Test build**:
+
    ```bash
    npm run build -- --material your-material --verbose
    ```
 
 3. **Check output**:
+
    - Verify files are generated correctly
    - Check file names match conventions
    - Verify content is correct
@@ -94,24 +99,133 @@ Before submitting:
 
 ## Commit Messages
 
-Use clear, descriptive commit messages:
+⚠️ **REQUIRED**: All commit messages **must** follow the conventional commit format. Invalid commit messages will be rejected.
+
+### Allowed Types
+
+Only these three types are permitted:
+
+- **`feat:`** - New features or additions
+- **`fix:`** - Bug fixes or corrections
+- **`docs:`** - Documentation changes only
+
+### Format
+
+```
+type: description
+```
+
+Or with optional scope:
+
+```
+type(scope): description
+```
+
+### Examples
+
+✅ **Valid:**
 
 - `feat: Add PLA material configuration`
 - `fix: Correct nozzle temperature for 0.6mm`
 - `docs: Update setup guide with troubleshooting`
+- `feat(bambuslicer): Add new printer support`
+- `fix(prusaslicer): Resolve temperature issue`
+
+❌ **Invalid:**
+
+- `Add PLA material` (missing type prefix)
+- `chore: Update dependencies` (chore not allowed)
+- `update: Fix bug` (update not allowed, should be fix)
+- `feat Add feature` (missing colon)
+
+### Automatic Validation
+
+Commit messages are **automatically validated** and **cannot be bypassed**:
+
+- **Local (Git Hook)**: Every commit is validated before it's created. Invalid messages will prevent the commit.
+- **Pull Requests**: All commits in a PR are validated by GitHub Actions. PRs with invalid commit messages will fail validation.
+
+### Editing Commit Messages
+
+If you need to fix a commit message:
+
+**Most recent commit (not pushed):**
+
+```bash
+git commit --amend -m "feat: Your corrected message"
+```
+
+**Most recent commit (already pushed):**
+
+```bash
+git commit --amend -m "feat: Your corrected message"
+git push --force-with-lease
+```
+
+**Older commits:**
+
+```bash
+git rebase -i HEAD~3  # Edit last 3 commits
+# Change 'pick' to 'reword' for commits to edit
+```
+
+⚠️ **Warning**: Only force push if you're the only one working on the branch.
 
 ## Pull Request Process
 
-1. Create a branch for your changes
-2. Make your changes
-3. Test thoroughly
-4. Update documentation if needed
-5. Submit PR with clear description
-6. The PR will be automatically validated
+⚠️ **Important**: Always work in a separate branch. Never commit directly to `main`.
+
+### Step-by-Step
+
+1. **Create a branch from `main`**:
+
+   ```bash
+   git checkout main
+   git pull origin main
+   git checkout -b your-branch-name
+   ```
+
+   Use descriptive branch names:
+
+   - `feat/add-petg-material`
+   - `fix/bambuslicer-temperature`
+   - `docs/update-setup-guide`
+
+2. **Make your changes** on the branch
+
+3. **Use proper commit messages** (see Commit Messages section above):
+
+   ```bash
+   git commit -m "feat: Add PETG material configuration"
+   ```
+
+4. **Test thoroughly**:
+
+   ```bash
+   npm run validate
+   npm run build
+   ```
+
+5. **Update documentation** if needed
+
+6. **Push your branch**:
+
+   ```bash
+   git push origin your-branch-name
+   ```
+
+7. **Create a Pull Request**:
+
+   - Go to GitHub and create a PR from your branch to `main`
+   - Add a clear description of your changes
+   - The PR will be automatically validated (including commit message validation)
+
+8. **Wait for review and approval** before merging
 
 ## Validation
 
 All PRs are automatically validated:
+
 - JSON/INI syntax checking
 - Build process verification
 - Config generation testing
