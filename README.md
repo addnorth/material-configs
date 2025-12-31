@@ -1,6 +1,10 @@
-# Material Configuration
+# add:north material configs
 
-Material configuration system for generating slicer configurations for 3D printing filaments.
+Material configuration system for generating slicer configurations for add:north 3D-filaments.
+
+## Download
+
+To download the latest released config files, go to [https://github.com/addnorth/material-configs/releases](releases) and select the package for your printer.
 
 ## Overview
 
@@ -20,11 +24,13 @@ See [docs/setup.md](docs/setup.md) for a detailed setup guide.
 ### For Developers
 
 1. Install dependencies:
+
    ```bash
    npm install
    ```
 
 2. Build all configs:
+
    ```bash
    npm run build
    ```
@@ -96,6 +102,7 @@ git push origin v1.0.0
 ```
 
 The GitHub Actions workflow will:
+
 - Build all configs
 - Generate changelog from commits
 - Create zip files per printer
