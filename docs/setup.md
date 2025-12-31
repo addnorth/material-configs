@@ -1,6 +1,6 @@
-# Setup Guide for Material Experts
+# Setup Guide for Contributers
 
-This guide will help you set up the material configuration system on your computer, even if you're not a developer.
+This guide will help you set up the material configs system on your computer, even if you're not a developer.
 
 ## Prerequisites
 
@@ -31,7 +31,7 @@ VS Code is a free code editor that will help you edit JSON and INI files with au
 
 1. Open this project folder in VS Code:
    - File → Open Folder
-   - Select the `material-configuration` folder
+   - Select the `material-configs` folder
 2. VS Code will suggest installing recommended extensions - click "Install"
 3. You're all set! VS Code will now:
    - Show errors in JSON files (red squiggly lines)
@@ -144,6 +144,8 @@ After running `npm run build`, you'll find generated files in:
 - `output/zips/` - Zip files (when using `--release`)
 
 ## Editing Material Configs
+
+Files related to configuring the profiles are located in `materials/`, `config/` and `templates/`
 
 ### VS Code Validation
 

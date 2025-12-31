@@ -1,4 +1,4 @@
-# add:north material configs
+# add:north Material Configs
 
 Material configuration system for generating slicer configurations for add:north 3D-filaments.
 
@@ -17,7 +17,7 @@ Configurations are generated with parameter inheritance, allowing shared setting
 
 ## Quick Start
 
-### For Material Experts
+### For Material Configurators
 
 See [docs/setup.md](setup.md) for a detailed setup guide.
 
