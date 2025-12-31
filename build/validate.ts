@@ -157,7 +157,11 @@ export async function validateMaterialOverrides(
 
   const materialDir = path.join(rootDir, "materials", material);
 
-  for (const slicer of ["prusaslicer", "bambuslicer"]) {
+  // Dynamically discover slicers for this material
+  const { getSlicersForMaterial } = await import("./loaders.js");
+  const slicers = await getSlicersForMaterial(material);
+
+  for (const slicer of slicers) {
     const slicerDir = path.join(materialDir, slicer);
 
     // Validate printers.json
@@ -213,7 +217,7 @@ export async function validateMaterialBaseConfigs(
 
   const materialDir = path.join(rootDir, "materials", material);
 
-  // Dynamically discover and validate all slicers
+  // Dynamically discover slicers for this material
   const { getSlicersForMaterial } = await import("./loaders.js");
   const slicers = await getSlicersForMaterial(material);
 

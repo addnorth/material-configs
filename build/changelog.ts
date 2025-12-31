@@ -2,10 +2,10 @@
  * Generates changelog from git commits
  */
 
+import { execSync } from "child_process";
 import fs from "fs/promises";
 import path from "path";
 import { fileURLToPath } from "url";
-import { execSync } from "child_process";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -16,7 +16,6 @@ export interface ChangelogOptions {
   version?: string;
   fromTag?: string;
   toTag?: string;
-  format?: "markdown" | "plain";
 }
 
 /**
@@ -71,9 +70,9 @@ function getCommitsBetween(fromTag: string | null, toTag: string | null): string
  * Generate changelog markdown - simple list format
  */
 export function generateChangelogMarkdown(
-  version: string,
+  _version: string,
   commits: string[],
-  options: ChangelogOptions = {}
+  _options: ChangelogOptions = {}
 ): string {
   const lines: string[] = [];
 
@@ -143,28 +142,6 @@ export async function generateChangelog(
   return generateChangelogMarkdown(version || "Unreleased", commits, options);
 }
 
-/**
- * Update CHANGELOG.md file
- */
-export async function updateChangelogFile(
-  version: string,
-  changelog: string
-): Promise<void> {
-  const changelogPath = path.join(rootDir, "CHANGELOG.md");
-  let existingContent = "";
-
-  try {
-    existingContent = await fs.readFile(changelogPath, "utf-8");
-  } catch (error: any) {
-    if (error.code !== "ENOENT") {
-      throw error;
-    }
-  }
-
-  // Prepend new changelog entry
-  const newContent = changelog + "\n" + existingContent;
-  await fs.writeFile(changelogPath, newContent, "utf-8");
-}
 
 /**
  * Get version from git tag or package.json

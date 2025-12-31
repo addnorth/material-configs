@@ -79,8 +79,8 @@ function applyNozzleOverrides(
 function applyCombinationOverrides(
   config: Record<string, any>,
   overrides: AllOverrides,
-  printer: string,
-  nozzle: string
+  _printer: string,
+  _nozzle: string
 ): Record<string, any> {
   if (!overrides?.combination) {
     return config;
@@ -99,7 +99,7 @@ export async function generateConfig(
   version: string,
   options: GenerateOptions = {}
 ): Promise<Record<string, any>> {
-  const { dryRun = false, verbose = false } = options;
+  const { verbose = false } = options;
 
   // Load base config
   const { config: baseConfig } = await loadBaseConfig(material, slicer);
@@ -125,8 +125,8 @@ export async function generateConfig(
     nozzleSize
   );
 
-  // Start with base config
-  let config = JSON.parse(JSON.stringify(baseConfig)) as Record<string, any>; // Deep clone
+  // Start with base config (deep clone)
+  let config = JSON.parse(JSON.stringify(baseConfig)) as Record<string, any>;
 
   // Apply overrides in order of specificity
   // 1. Printer overrides
@@ -167,7 +167,7 @@ export async function generateAllConfigs(
   version: string,
   options: GenerateOptions = {}
 ): Promise<ConfigData[]> {
-  const { dryRun = false, verbose = false } = options;
+  const { verbose = false } = options;
 
   const { config: baseConfig } = await loadBaseConfig(material, slicer);
   if (!baseConfig) {

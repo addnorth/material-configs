@@ -12,10 +12,8 @@ import {
   loadBaseConfig,
 } from "../build/loaders.js";
 import {
-  detectFormat,
   getGenerator,
   validateSlicer,
-  type GeneratorInfo,
 } from "../build/generators/registry.js";
 import { getVersion } from "../build/changelog.js";
 import fs from "fs/promises";

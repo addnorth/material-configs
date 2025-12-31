@@ -64,7 +64,7 @@ export async function loadBaseConfig(
   // Try to detect format by checking for base.ini or base.json
   const iniPath = path.join(slicerDir, "base.ini");
   const jsonPath = path.join(slicerDir, "base.json");
-  
+
   try {
     // Check for INI file first
     await fs.access(iniPath);
@@ -207,13 +207,13 @@ export async function getSlicersForMaterial(material: string): Promise<string[]>
 export async function getAllSlicers(): Promise<string[]> {
   const materials = await getAllMaterials();
   const slicerSet = new Set<string>();
-  
+
   for (const material of materials) {
     const slicers = await getSlicersForMaterial(material);
     for (const slicer of slicers) {
       slicerSet.add(slicer);
     }
   }
-  
+
   return Array.from(slicerSet);
 }

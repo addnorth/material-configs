@@ -10,9 +10,44 @@ You'll need:
 - Internet connection
 - Basic file editing skills
 
-## Step 1: Install Node.js
+## Step 1: Install VS Code (Recommended)
 
-Node.js is the software that runs the build scripts.
+VS Code is a free code editor that will help you edit JSON and INI files with automatic error checking.
+
+### Why VS Code?
+
+- **Automatic error detection**: Shows errors in JSON/INI files as you type
+- **Auto-formatting**: Keeps your files properly formatted
+- **Easy to use**: Works like a text editor but with helpful features
+
+### Installation
+
+1. Go to [code.visualstudio.com](https://code.visualstudio.com/)
+2. Download VS Code for your operating system
+3. Install it (accept all defaults)
+4. Open VS Code
+
+### First Time Setup
+
+1. Open this project folder in VS Code:
+   - File → Open Folder
+   - Select the `material-configuration` folder
+2. VS Code will suggest installing recommended extensions - click "Install"
+3. You're all set! VS Code will now:
+   - Show errors in JSON files (red squiggly lines)
+   - Show errors in INI files
+   - Auto-format files when you save
+   - Highlight syntax errors
+
+### What You'll See
+
+- **Red squiggly lines** = Syntax error (missing comma, bracket, etc.)
+- **Yellow warnings** = Potential issues
+- **Green checkmark** = File is valid
+
+## Step 2: Install Node.js
+
+Node.js is the software that runs the build scripts. (You can skip this if you only want to edit files - VS Code will still validate your JSON/INI files)
 
 ### Windows
 
@@ -50,7 +85,7 @@ npm --version
 
 You should see version numbers. If you see an error, Node.js is not installed correctly.
 
-## Step 2: Get the Repository
+## Step 3: Get the Repository
 
 ### Option A: Using GitHub Desktop (Easier)
 
@@ -76,7 +111,7 @@ You should see version numbers. If you see an error, Node.js is not installed co
    cd material-configs
    ```
 
-## Step 3: Install Dependencies
+## Step 4: Install Dependencies
 
 1. Open a terminal in the project folder
 2. Run:
@@ -86,7 +121,7 @@ You should see version numbers. If you see an error, Node.js is not installed co
 
 This will download all the required software packages. It may take a few minutes.
 
-## Step 4: Test the Setup
+## Step 5: Test the Setup
 
 Run a test build:
 
@@ -109,6 +144,30 @@ After running `npm run build`, you'll find generated files in:
 - `output/zips/` - Zip files (when using `--release`)
 
 ## Editing Material Configs
+
+### VS Code Validation
+
+When editing files in VS Code, you'll see:
+
+- **Red squiggly lines** = Syntax error (missing comma, bracket, quote, etc.)
+  - Hover over the red line to see what's wrong
+  - Common errors: missing commas, unclosed brackets, typos in quotes
+- **Yellow warnings** = Potential issues
+- **No errors** = File is valid ✅
+
+**Example errors you might see:**
+
+- `Expected ',' or '}'` - Missing comma between properties
+- `Expected property name` - Syntax error in JSON
+- `Unexpected token` - Invalid character or structure
+
+**How to fix:**
+
+1. Click on the red line
+2. Read the error message
+3. Fix the syntax issue
+4. Save the file (Ctrl+S / Cmd+S)
+5. The error should disappear if fixed correctly
 
 ### Adding a New Material
 

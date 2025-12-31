@@ -15,7 +15,6 @@ import {
   loadBaseConfig,
 } from "./loaders.js";
 import {
-  detectFormat,
   getGenerator,
   validateSlicer,
 } from "./generators/registry.js";
@@ -255,7 +254,7 @@ async function generateAllConfigs(
           );
           await generator.saveConfig(config, path.dirname(outputPath), options);
           manifestEntries.push({
-            slicer: slicer,
+            slicer,
             material,
             printer: config.printer,
             nozzle: config.nozzle,

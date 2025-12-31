@@ -9,7 +9,8 @@
     "build:configs": "node dist/scripts/build.js",
     "validate": "tsc && node dist/scripts/build.js --validate-only",
     "changelog": "tsc && node dist/build/changelog.js",
-    "dev": "tsc --watch"
+    "dev": "tsc --watch",
+    "lint": "npm run validate"
   },
   "keywords": [
     "3d-printing",

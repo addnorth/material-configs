@@ -21,6 +21,8 @@ Configurations are generated with parameter inheritance, allowing shared setting
 
 See [docs/setup.md](docs/setup.md) for a detailed setup guide.
 
+**💡 Tip**: VS Code will automatically show errors in JSON and INI files as you edit them. Red squiggly lines indicate syntax errors that need to be fixed.
+
 ### For Developers
 
 1. Install dependencies:

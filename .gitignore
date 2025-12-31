@@ -17,13 +17,10 @@ Thumbs.db
 # .vscode/ - Allow .vscode/settings.json for team consistency
 .vscode/*
 !.vscode/settings.json
+!.vscode/extensions.json
 .idea/
 *.swp
 *.swo
-
-# Environment
-.env
-.env.local
 
 # TypeScript
 *.tsbuildinfo

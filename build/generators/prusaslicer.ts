@@ -5,14 +5,7 @@
 
 import fs from "fs/promises";
 import path from "path";
-import { fileURLToPath } from "url";
-import ini from "ini";
 import { loadBaseConfig, loadAllOverrides, AllOverrides } from "../loaders.js";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-// When compiled, files are in dist/build/generators/, so go up three levels to reach project root
-const rootDir = path.resolve(__dirname, "../../..");
 
 export interface GenerateOptions {
   dryRun?: boolean;
@@ -144,7 +137,7 @@ export async function generateConfig(
   version: string,
   options: GenerateOptions = {}
 ): Promise<Record<string, Record<string, any>>> {
-  const { dryRun = false, verbose = false, printer, nozzle } = options;
+  const { verbose = false, printer, nozzle } = options;
 
   // Load base config
   const { config: baseConfig } = await loadBaseConfig(material, slicer);
@@ -153,10 +146,9 @@ export async function generateConfig(
   }
 
   // Deep clone the config
-  let config = JSON.parse(JSON.stringify(baseConfig)) as Record<
-    string,
-    Record<string, any>
-  >;
+  let config = JSON.parse(
+    JSON.stringify(baseConfig)
+  ) as Record<string, Record<string, any>>;
 
   // Load overrides if printer and nozzle are specified
   if (printer && nozzle) {
@@ -194,7 +186,7 @@ export async function generateAllConfigs(
   version: string,
   options: GenerateOptions = {}
 ): Promise<PrusaConfigData[]> {
-  const { dryRun = false, verbose = false } = options;
+  const { verbose = false } = options;
 
   const { config: baseConfig } = await loadBaseConfig(material, slicer);
   if (!baseConfig) {
