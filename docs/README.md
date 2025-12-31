@@ -46,7 +46,7 @@ See [docs/setup.md](setup.md) for a detailed setup guide.
 
 ## Documentation
 
-- [Setup Guide](setup.md) - Setup instructions for material experts
+- [Setup Guide](setup.md) - Setup instructions for material contributers
 - [Structure](structure.md) - Directory structure and organization
 - [Contributing](contributing.md) - Contribution guidelines
 
