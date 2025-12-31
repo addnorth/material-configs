@@ -19,16 +19,47 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Check for relevant changes
+        id: check_changes
+        run: |
+          if [[ "${{ github.ref }}" == refs/tags/* ]]; then
+            # Tag push - always build
+            echo "SHOULD_BUILD=true" >> $GITHUB_OUTPUT
+            echo "Building release: tag push detected"
+          else
+            # Push to main - check if materials/ or config/ changed
+            LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+            if [ -z "$LATEST_TAG" ]; then
+              # No tags exist, check against previous commit
+              CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD)
+            else
+              # Check against latest tag
+              CHANGED_FILES=$(git diff --name-only $LATEST_TAG HEAD)
+            fi
+
+            # Check if any files in materials/ or config/ changed
+            if echo "$CHANGED_FILES" | grep -qE "^materials/|^config/"; then
+              echo "SHOULD_BUILD=true" >> $GITHUB_OUTPUT
+              echo "Building release: changes detected in materials/ or config/"
+            else
+              echo "SHOULD_BUILD=false" >> $GITHUB_OUTPUT
+              echo "Skipping release: no changes in materials/ or config/"
+            fi
+          fi
+
       - name: Setup Node.js
+        if: steps.check_changes.outputs.SHOULD_BUILD == 'true'
         uses: actions/setup-node@v4
         with:
           node-version: "20"
           cache: "npm"
 
       - name: Install dependencies
+        if: steps.check_changes.outputs.SHOULD_BUILD == 'true'
         run: npm ci
 
       - name: Get version
+        if: steps.check_changes.outputs.SHOULD_BUILD == 'true'
         id: get_version
         run: |
           if [[ "${{ github.ref }}" == refs/tags/* ]]; then
@@ -58,9 +89,11 @@ jobs:
           fi
 
       - name: Build TypeScript
+        if: steps.check_changes.outputs.SHOULD_BUILD == 'true'
         run: npx tsc
 
       - name: Generate changelog
+        if: steps.check_changes.outputs.SHOULD_BUILD == 'true'
         id: changelog
         env:
           VERSION: ${{ steps.get_version.outputs.VERSION }}
@@ -73,12 +106,13 @@ jobs:
           echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Build release
+        if: steps.check_changes.outputs.SHOULD_BUILD == 'true'
         run: npm run build -- --release --verbose
         env:
           VERSION: ${{ steps.get_version.outputs.VERSION }}
 
       - name: Create git tag
-        if: steps.get_version.outputs.SHOULD_TAG == 'true'
+        if: steps.check_changes.outputs.SHOULD_BUILD == 'true' && steps.get_version.outputs.SHOULD_TAG == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -86,6 +120,7 @@ jobs:
           git push origin ${{ steps.get_version.outputs.VERSION }}
 
       - name: Create Release
+        if: steps.check_changes.outputs.SHOULD_BUILD == 'true'
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ steps.get_version.outputs.VERSION }}
@@ -98,8 +133,14 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload output artifacts
+        if: steps.check_changes.outputs.SHOULD_BUILD == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: config-files
           path: output/
           retention-days: 30
+
+      - name: Skip release message
+        if: steps.check_changes.outputs.SHOULD_BUILD == 'false'
+        run: |
+          echo "⏭️  Skipping release: No changes detected in materials/ or config/ directories"
