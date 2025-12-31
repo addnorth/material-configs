@@ -13,8 +13,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -24,37 +22,6 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
-
-      - name: Validate commit messages
-        run: |
-          ALLOWED_TYPES="feat|fix|docs"
-          COMMIT_REGEX="^($ALLOWED_TYPES)(\(.+\))?: .+"
-
-          INVALID_COMMITS=()
-          for commit in $(git log origin/${{ github.base_ref }}..HEAD --pretty=format:"%H"); do
-            MESSAGE=$(git log -1 --pretty=format:"%s" $commit)
-            if ! echo "$MESSAGE" | grep -qE "$COMMIT_REGEX"; then
-              INVALID_COMMITS+=("$commit: $MESSAGE")
-            fi
-          done
-
-          if [ ${#INVALID_COMMITS[@]} -gt 0 ]; then
-            echo "❌ Invalid commit messages found:"
-            printf '%s\n' "${INVALID_COMMITS[@]}"
-            echo ""
-            echo "Commit messages must follow the format:"
-            echo "  feat: description"
-            echo "  fix: description"
-            echo "  docs: description"
-            echo ""
-            echo "Examples:"
-            echo "  feat: Add PLA material configuration"
-            echo "  fix: Correct nozzle temperature for 0.6mm"
-            echo "  docs: Update setup guide"
-            exit 1
-          fi
-
-          echo "✅ All commit messages are valid"
 
       - name: Build TypeScript
         run: npx tsc

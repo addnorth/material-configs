@@ -29,11 +29,7 @@ See [docs/setup.md](docs/setup.md) for a detailed setup guide.
    npm install
    ```
 
-2. **Important**:
-
-   - Always work in a separate branch (never commit directly to `main`)
-   - Commit messages must follow the format `feat:`, `fix:`, or `docs:`
-   - See [Contributing Guide](docs/contributing.md) for details
+2. **Important**: Always work in a separate branch (never commit directly to `main`) - see [Contributing Guide](docs/contributing.md) for details
 
 3. Build all configs:
 

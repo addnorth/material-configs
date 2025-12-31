@@ -68,122 +68,17 @@ function getCommitsBetween(fromTag: string | null, toTag: string | null): string
 }
 
 /**
- * Parse conventional commit message
- */
-function parseCommit(commit: string): {
-  type: string;
-  scope?: string;
-  message: string;
-  breaking: boolean;
-} {
-  const breakingMatch = commit.match(/^(\w+)(?:\(([^)]+)\))?!: (.+)$/);
-  if (breakingMatch) {
-    return {
-      type: breakingMatch[1],
-      scope: breakingMatch[2],
-      message: breakingMatch[3],
-      breaking: true,
-    };
-  }
-
-  const match = commit.match(/^(\w+)(?:\(([^)]+)\))?: (.+)$/);
-  if (match) {
-    return {
-      type: match[1],
-      scope: match[2],
-      message: match[3],
-      breaking: false,
-    };
-  }
-
-  return {
-    type: "other",
-    message: commit,
-    breaking: false,
-  };
-}
-
-/**
- * Group commits by type
- */
-function groupCommitsByType(commits: string[]): Record<string, string[]> {
-  const groups: Record<string, string[]> = {
-    feat: [],
-    fix: [],
-    docs: [],
-    style: [],
-    refactor: [],
-    perf: [],
-    test: [],
-    chore: [],
-    breaking: [],
-    other: [],
-  };
-
-  for (const commit of commits) {
-    const parsed = parseCommit(commit);
-    if (parsed.breaking) {
-      groups.breaking.push(commit);
-    } else if (groups[parsed.type]) {
-      groups[parsed.type].push(commit);
-    } else {
-      groups.other.push(commit);
-    }
-  }
-
-  return groups;
-}
-
-/**
- * Generate changelog markdown
+ * Generate changelog markdown - simple list format
  */
 export function generateChangelogMarkdown(
   version: string,
   commits: string[],
   options: ChangelogOptions = {}
 ): string {
-  const groups = groupCommitsByType(commits);
   const lines: string[] = [];
 
-  lines.push(`## [${version}]`);
-  lines.push("");
-
-  const typeLabels: Record<string, string> = {
-    feat: "### Added",
-    fix: "### Fixed",
-    docs: "### Documentation",
-    breaking: "### Breaking Changes",
-    other: "### Other",
-  };
-
-  // Add breaking changes first
-  if (groups.breaking.length > 0) {
-    lines.push(typeLabels.breaking);
-    for (const commit of groups.breaking) {
-      const parsed = parseCommit(commit);
-      lines.push(`- ${parsed.message}`);
-    }
-    lines.push("");
-  }
-
-  // Add other types
-  for (const [type, typeCommits] of Object.entries(groups)) {
-    if (type === "breaking" || typeCommits.length === 0) continue;
-
-    if (typeLabels[type]) {
-      lines.push(typeLabels[type]);
-      for (const commit of typeCommits) {
-        const parsed = parseCommit(commit);
-        lines.push(`- ${parsed.message}`);
-      }
-      lines.push("");
-    } else if (type === "other" && typeCommits.length > 0) {
-      lines.push(typeLabels.other);
-      for (const commit of typeCommits) {
-        lines.push(`- ${commit}`);
-      }
-      lines.push("");
-    }
+  for (const commit of commits) {
+    lines.push(`- ${commit}`);
   }
 
   return lines.join("\n");
