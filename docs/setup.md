@@ -4,50 +4,38 @@ This guide helps you put the **material-configs** project on your computer and r
 
 If **terminals**, **npm**, or **GitHub** are new to you, read **[Start here](start-here.md)** first. This page assumes you can open a terminal and type (or paste) commands.
 
-## Prerequisites
+## Step 1: Install Cursor (recommended)
 
-- A computer (**Windows**, **Mac**, or **Linux**) with internet.
-- Space on disk for the project (small; typically well under 500 MB with tools installed).
-- Patience the first time you install software.
-
-You need **basic skills**:
-
-- Finding and opening **folders**.
-- **Saving** files after editing.
-- If you use the command line: **copying** a command, **pasting** it into the terminal, pressing **Enter**.
-
-## Step 1: Install VS Code (recommended)
-
-**Visual Studio Code** (“VS Code”) is a free editor that highlights JSON and INI files and shows many mistakes **before** you run any build.
+**[Cursor](https://cursor.com/)** is the preferred editor for this project. It is built on the same foundation as Visual Studio Code, so it highlights JSON and INI files, shows many mistakes **before** you run any build, and adds **AI-assisted editing** (inline suggestions, chat, and explanations in the editor).
 
 ### Install
 
 1. Open your web browser.
-2. Go to [https://code.visualstudio.com/](https://code.visualstudio.com/).
+2. Go to [https://cursor.com/](https://cursor.com/).
 3. Download the version for your system (**Windows**, **Mac**, or **Linux**).
 4. Run the installer and accept the default options unless your organisation tells you otherwise.
-5. Start VS Code.
+5. Start Cursor.
 
 ### Open this project
 
-1. In VS Code: **File → Open Folder…** (Windows/Linux) or **File → Open…** (Mac).
+1. In Cursor: **File → Open Folder…** (Windows/Linux) or **File → Open…** (Mac).
 2. Select the **`material-configs`** folder (the folder you got from Git clone or GitHub Desktop, **not** a zip inside Downloads unless you unzipped it first).
-3. If VS Code asks to install **recommended extensions**, say **Install**. They help with JSON and formatting.
+3. If Cursor asks to install **recommended extensions**, say **Install**. They help with JSON and formatting.
 
 ### What the colours and lines mean
 
 - **Red squiggles** under text: often a **syntax** error (missing comma, wrong bracket, etc.). Move the mouse over the red text to read the hint.
 - **Saving** the file: **Ctrl+S** (Windows/Linux) or **Cmd+S** (Mac). Save often.
 
-### Cursor (optional — AI guidance)
+### Visual Studio Code (optional)
 
-If you want **AI-assisted editing** (inline suggestions, chat, and explanations in the editor), use **[Cursor](https://cursor.com/)**. It is built on the same foundation as VS Code, so JSON and INI editing, squiggles, and **File → Open Folder** work the same way. Install it from the website, open the `material-configs` folder, and follow the rest of this guide like you would with VS Code.
+If you prefer not to use Cursor, **Visual Studio Code** (“VS Code”) is a free alternative with the same JSON/INI editing and squiggles. Install it from [https://code.visualstudio.com/](https://code.visualstudio.com/), then open the `material-configs` folder with **File → Open Folder** and follow the rest of this guide the same way.
 
-## Step 2: Install Node.js (only if you will run `npm` commands)
+## Step 2: Install Node.js
 
-**Node.js** runs the scripts that **validate** and **build** configs. You can **skip** Node.js if you only edit files and someone else runs checks for you—but installing it lets you verify your work yourself.
+**Node.js** runs the scripts the **validate** script.
 
-Use **Node.js 24 or newer** (the root **`package.json`** `engines` field matches what CI runs). If your installer offers several versions, pick one that satisfies that.
+Use **Node.js 24 or newer**. If your installer offers several versions, pick one that satisfies that.
 
 ### Windows
 
@@ -95,7 +83,7 @@ You need the project files on disk. Pick **one** path.
 2. Install [GitHub Desktop](https://desktop.github.com/).
 3. Sign in to GitHub inside the app.
 4. **File → Clone repository**. Choose this repo and a folder on your computer (for example `Documents`).
-5. After clone finishes, open that folder in VS Code (**File → Open Folder**).
+5. After clone finishes, open that folder in Cursor (**File → Open Folder**), or in VS Code if you use that instead.
 
 ### Option B: Command line (`git`)
 
@@ -129,12 +117,12 @@ You need the project files on disk. Pick **one** path.
 
 3. Wait until it finishes. The first run may take a few minutes.
 
-## Step 5: Test with a dry run
+## Step 5: Test with validate
 
-This checks that your setup can run the build **without** necessarily writing all output files:
+This checks that your validate script can run:
 
 ```bash
-npm run build -- --dry-run --verbose
+npm run validate
 ```
 
 If you see errors, see **Troubleshooting** below.
@@ -156,7 +144,7 @@ The `output/` folder is **not** part of normal Git history; it is rebuilt when y
 
 ### JSON and INI
 
-- **JSON** files use `{` `}` `[` `]` commas between entries, and **double quotes** `"` around text. One missing comma causes a red squiggle in VS Code.
+- **JSON** files use `{` `}` `[` `]` commas between entries, and **double quotes** `"` around text. One missing comma causes a red squiggle in Cursor (or VS Code).
 - **INI** files use **sections** like `[vendor]` and **lines** like `key = value`. Typos in section headers matter.
 
 ### Validate before you commit
@@ -165,33 +153,17 @@ The `output/` folder is **not** part of normal Git history; it is rebuilt when y
 npm run validate
 ```
 
-**Lint and format (optional but recommended):**
-
-```bash
-npm run lint
-npm run format:check
-```
-
-To auto-fix ESLint issues where possible and rewrite files with Prettier:
-
-```bash
-npm run lint:fix
-npm run format
-```
-
 Optional while iterating — validates once, then again whenever files under `materials/` or `config/` change (not build code or `templates/`):
 
 ```bash
 npm run validate:watch
 ```
 
-Then, for one material:
+To build the files locally to see the output, run:
 
 ```bash
-npm run build -- --material pla --verbose
+npm run build
 ```
-
-Replace `pla` with your material folder name.
 
 ## Troubleshooting
 
@@ -207,7 +179,7 @@ Replace `pla` with your material folder name.
 ### Build or validate fails with validation errors
 
 - Open the file mentioned in the error.
-- Fix JSON/INI syntax (VS Code helps).
+- Fix JSON/INI syntax (Cursor or your editor helps).
 - Run `npm run validate` again.
 
 ### Need help

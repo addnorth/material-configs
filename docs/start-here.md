@@ -42,7 +42,7 @@ You **do not** need this repo on your computer.
 ## I want to edit settings files on my computer
 
 1. Get a copy of the project on your machine (see the [Setup guide](setup.md)): either **GitHub Desktop** (clicks) or **git** in the terminal.
-2. Install an editor: **[Visual Studio Code](https://code.visualstudio.com/)** (“VS Code”, **free**) is a good default. If you want **AI guidance** while editing, **[Cursor](https://cursor.com/)** works the same way for opening folders and reading JSON/INI. Use **File → Open Folder** to open the `material-configs` folder.
+2. Install an editor: **[Cursor](https://cursor.com/)**. Use **File → Open Folder** to open the `material-configs` folder.
 3. Edit files under `materials/` (and sometimes `config/`) as described in [Structure](structure.md) and [Contributing](contributing.md).
 4. Red **squiggles** in the editor usually mean a **syntax** problem (for example a missing comma in JSON). Fix those before you share your work.
 
@@ -61,7 +61,7 @@ The terminal is a window with a **prompt** (often ends with `%` or `>`). You **t
 
 ### Go to the project folder (`cd`)
 
-The command `**cd`** means “**c**hange **d\*\*irectory” (go to a folder).
+The command **`cd`** means **“change directory”** (go to a folder).
 
 **Windows example** (quotes matter if the path has spaces):
 

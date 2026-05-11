@@ -82,17 +82,6 @@ Override files use JSON format and are organized by slicer:
 
 - **combinations/**: Most specific overrides for printer+nozzle combinations (`{printerId}-{nozzle}.json`)
 
-## Build Directory
-
-TypeScript source files for the build system:
-
-- `generators/` - Format-specific generators
-- `loaders.ts` - Config loading logic
-- `merge.ts` - Parameter merging
-- `validate.ts` - Validation logic
-- `changelog.ts` - Changelog generation
-- `release.ts` - Release building
-
 ## Config Directory
 
 Configuration and metadata files:
