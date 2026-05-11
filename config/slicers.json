@@ -1,0 +1,26 @@
+{
+  "description": "Slicer ids (folder names under materials/<material>/), output layout, format, and scaffold templates. Printer rows in config/printers.json reference these ids in \"slicers\".",
+  "slicers": [
+    {
+      "id": "prusaslicer",
+      "label": "PrusaSlicer",
+      "format": "ini",
+      "baseFilename": "base.ini",
+      "template": "templates/prusaslicer.ini.template"
+    },
+    {
+      "id": "orcaslicer",
+      "label": "OrcaSlicer",
+      "format": "ini",
+      "baseFilename": "base.ini",
+      "template": "templates/orcaslicer.ini.template"
+    },
+    {
+      "id": "bambuslicer",
+      "label": "Bambu Studio",
+      "format": "json",
+      "baseFilename": "base.json",
+      "template": "templates/bambuslicer.json.template"
+    }
+  ]
+}

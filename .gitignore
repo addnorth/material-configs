@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+
+# Generated output
+output/
+dist/
+
+# Cursor
+.cursor/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+# .vscode/ - Allow .vscode/settings.json for team consistency
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+
+# TypeScript
+*.tsbuildinfo

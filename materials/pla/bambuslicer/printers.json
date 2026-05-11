@@ -1,0 +1,13 @@
+{
+  "printers": {
+    "X1": {
+      "chamber_temperatures": ["0"]
+    },
+    "X1C": {
+      "chamber_temperatures": ["0"]
+    },
+    "X1E": {
+      "chamber_temperatures": ["0"]
+    }
+  }
+}

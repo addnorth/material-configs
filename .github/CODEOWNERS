@@ -1,0 +1,6 @@
+# Admins: approve PRs that touch anything outside materials/ and config/printers.json
+* @cfh-se
+
+# Reviewers: approve when the PR only changes these paths
+/materials/ @Add-Norther @cfh-se
+/config/printers.json @Add-Norther @cfh-se

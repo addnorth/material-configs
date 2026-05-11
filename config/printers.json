@@ -1,0 +1,73 @@
+{
+  "description": "Machine registry: vendors and their printers. Materials use materials/*/printers.json only for slicer overrides.",
+  "vendors": [
+    {
+      "id": "prusa",
+      "name": "Prusa Research",
+      "url": "https://www.prusa3d.com/",
+      "printers": [
+        {
+          "id": "MK4",
+          "name": "Original Prusa MK4",
+          "slicers": ["prusaslicer"],
+          "nozzles": ["0.4mm", "0.25mm", "0.3mm", "0.5mm", "0.6mm", "0.8mm"]
+        },
+        {
+          "id": "MK4IS",
+          "name": "Original Prusa MK4 Input Shaper",
+          "slicers": ["prusaslicer"],
+          "nozzles": ["0.4mm", "0.25mm", "0.3mm", "0.5mm", "0.6mm", "0.8mm"]
+        }
+      ]
+    },
+    {
+      "id": "bambu",
+      "name": "Bambu Lab",
+      "url": "https://bambulab.com/",
+      "printers": [
+        {
+          "id": "X1",
+          "name": "Bambu Lab X1",
+          "slicers": ["bambuslicer"],
+          "nozzles": ["0.4mm", "0.6mm", "0.8mm"]
+        },
+        {
+          "id": "X1C",
+          "name": "Bambu Lab X1 Carbon",
+          "slicers": ["bambuslicer"],
+          "nozzles": ["0.4mm", "0.6mm", "0.8mm"]
+        },
+        {
+          "id": "X1E",
+          "name": "Bambu Lab X1E",
+          "slicers": ["bambuslicer"],
+          "nozzles": ["0.4mm", "0.6mm", "0.8mm"]
+        },
+        {
+          "id": "P1P",
+          "name": "Bambu Lab P1P",
+          "slicers": ["bambuslicer"],
+          "nozzles": ["0.4mm", "0.6mm", "0.8mm"]
+        },
+        {
+          "id": "P1S",
+          "name": "Bambu Lab P1S",
+          "slicers": ["bambuslicer"],
+          "nozzles": ["0.4mm", "0.6mm", "0.8mm"]
+        },
+        {
+          "id": "A1",
+          "name": "Bambu Lab A1",
+          "slicers": ["bambuslicer"],
+          "nozzles": ["0.4mm", "0.6mm", "0.8mm"]
+        },
+        {
+          "id": "A1mini",
+          "name": "Bambu Lab A1 mini",
+          "slicers": ["bambuslicer"],
+          "nozzles": ["0.4mm", "0.6mm", "0.8mm"]
+        }
+      ]
+    }
+  ]
+}
