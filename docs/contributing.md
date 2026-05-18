@@ -9,7 +9,7 @@ Thank you for helping improve these material profiles.
 1. Read **[Setup](setup.md)** so your computer can run `npm run validate` (recommended).
 2. Read **[Structure](structure.md)** so you know which files to touch.
 3. **Do not commit directly to `main`.** Use a **branch** and a **pull request** (explained below).
-4. Change files, **save**, run `**npm run validate`**, then open a pull request.
+4. Change files, **save**, run `**npm run validate`\*\*, then open a pull request.
 5. Wait for review before your changes are merged.
 
 ## Adding a new material
@@ -104,24 +104,28 @@ npm run validate:watch
 ### If you use the command line
 
 1. **Create a branch from `main`**:
-  ```bash
-   git checkout main
-   git pull origin main
-   git checkout -b your-branch-name
-  ```
-   **Branch name examples:** `feat/add-petg-material`, `fix/bambuslicer-temperature`, `docs/update-setup-guide`.
-2. **Make your changes** on that branch.
-3. **Validate**:
-  ```bash
-   npm run validate
-  ```
+
+```bash
+ git checkout main
+ git pull origin main
+ git checkout -b your-branch-name
+```
+
+**Branch name examples:** `feat/add-petg-material`, `fix/bambuslicer-temperature`, `docs/update-setup-guide`. 2. **Make your changes** on that branch. 3. **Validate**:
+
+```bash
+ npm run validate
+```
+
 4. **Commit and push** (if you know `git`; otherwise use GitHub Desktop):
-  ```bash
-   git add .
-   git commit -m "Short description of change"
-   git push origin your-branch-name
-  ```
-5. On **GitHub**, open a **pull request** from your branch to `**main`**. Describe what you changed. Automated checks may run on the PR.
+
+```bash
+ git add .
+ git commit -m "Short description of change"
+ git push origin your-branch-name
+```
+
+5. On **GitHub**, open a **pull request** from your branch to `**main`\*\*. Describe what you changed. Automated checks may run on the PR.
 6. **Wait for review and approval** before merging.
 
 ### What is a pull request?

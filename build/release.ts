@@ -431,9 +431,7 @@ export async function buildRelease(options: ReleaseOptions = {}): Promise<{
       printerRow && printerRow.slicers.some((sid) => iniSlicerIds.has(sid))
         ? iniConfigs.filter(
             (c: ManifestEntry) =>
-              c.slicer &&
-              iniSlicerIds.has(c.slicer) &&
-              printerRow.slicers.includes(c.slicer)
+              c.slicer && iniSlicerIds.has(c.slicer) && printerRow.slicers.includes(c.slicer)
           )
         : [];
 

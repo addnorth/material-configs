@@ -137,7 +137,9 @@ export function validatePrusaConfig(
 
   // Should have vendor section
   if (!config.vendor) {
-    errors.push(`${pfx}missing [vendor] section (top-level keys present: ${Object.keys(config).slice(0, 12).join(", ")}${Object.keys(config).length > 12 ? ", …" : ""})`);
+    errors.push(
+      `${pfx}missing [vendor] section (top-level keys present: ${Object.keys(config).slice(0, 12).join(", ")}${Object.keys(config).length > 12 ? ", …" : ""})`
+    );
   } else {
     if (!config.vendor.name) {
       errors.push(`${pfx}missing vendor.name inside [vendor]`);
@@ -150,7 +152,9 @@ export function validatePrusaConfig(
   // Should have at least one filament section
   const hasFilamentSection = Object.keys(config).some((key) => key.startsWith("filament:"));
   if (!hasFilamentSection) {
-    warnings.push(`${pfx}no [filament:*] sections found (filament profiles usually need at least one filament section)`);
+    warnings.push(
+      `${pfx}no [filament:*] sections found (filament profiles usually need at least one filament section)`
+    );
   }
 
   return {
@@ -259,7 +263,9 @@ export async function validateSlicersConfig(): Promise<ConfigValidationResult> {
       }
     }
     if (typeof s.label !== "string" || !s.label.trim()) {
-      errors.push(`${row}: field "label" must be a non-empty string (got ${JSON.stringify(s.label)})`);
+      errors.push(
+        `${row}: field "label" must be a non-empty string (got ${JSON.stringify(s.label)})`
+      );
     }
     if (s.format !== "ini" && s.format !== "json") {
       errors.push(
@@ -276,16 +282,22 @@ export async function validateSlicersConfig(): Promise<ConfigValidationResult> {
         `${row}: field "template" must be a non-empty string (got ${JSON.stringify(s.template)})`
       );
     } else if (s.template.includes("..") || path.posix.normalize(s.template).startsWith("..")) {
-      errors.push(`${row}: field "template" must not contain ".." (got ${JSON.stringify(s.template)})`);
+      errors.push(
+        `${row}: field "template" must not contain ".." (got ${JSON.stringify(s.template)})`
+      );
     }
     if (s.format === "ini" && typeof s.baseFilename === "string") {
       if (!s.baseFilename.endsWith(".ini")) {
-        warnings.push(`${row}: with format "ini", baseFilename normally ends with .ini (got ${JSON.stringify(s.baseFilename)})`);
+        warnings.push(
+          `${row}: with format "ini", baseFilename normally ends with .ini (got ${JSON.stringify(s.baseFilename)})`
+        );
       }
     }
     if (s.format === "json" && typeof s.baseFilename === "string") {
       if (!s.baseFilename.endsWith(".json")) {
-        warnings.push(`${row}: with format "json", baseFilename normally ends with .json (got ${JSON.stringify(s.baseFilename)})`);
+        warnings.push(
+          `${row}: with format "json", baseFilename normally ends with .json (got ${JSON.stringify(s.baseFilename)})`
+        );
       }
     }
   }
@@ -339,9 +351,7 @@ export async function validateMachineRegistryConfig(
 
   const vendors = data.vendors;
   if (!Array.isArray(vendors)) {
-    errors.push(
-      `${rp}: property "vendors" must be an array (got ${typeof vendors})`
-    );
+    errors.push(`${rp}: property "vendors" must be an array (got ${typeof vendors})`);
     return { isValid: false, errors, warnings };
   }
 
@@ -365,10 +375,14 @@ export async function validateMachineRegistryConfig(
       }
     }
     if (typeof v.name !== "string" || !v.name.trim()) {
-      errors.push(`${vBase}: field "name" must be a non-empty string (got ${JSON.stringify(v.name)})`);
+      errors.push(
+        `${vBase}: field "name" must be a non-empty string (got ${JSON.stringify(v.name)})`
+      );
     }
     if (typeof v.url !== "string" || !v.url.trim()) {
-      errors.push(`${vBase}: field "url" must be a non-empty string (got ${JSON.stringify(v.url)})`);
+      errors.push(
+        `${vBase}: field "url" must be a non-empty string (got ${JSON.stringify(v.url)})`
+      );
     }
 
     const plist = v.printers;
@@ -390,7 +404,9 @@ export async function validateMachineRegistryConfig(
       } else {
         const prevLoc = printerFirstLoc.get(id);
         if (prevLoc !== undefined) {
-          errors.push(`${rp}: duplicate printer id "${id}" — first at ${prevLoc}, repeated at ${loc}`);
+          errors.push(
+            `${rp}: duplicate printer id "${id}" — first at ${prevLoc}, repeated at ${loc}`
+          );
         } else {
           printerFirstLoc.set(id, loc);
         }
@@ -640,7 +656,9 @@ export async function validateMaterialRegistrySlicerCoverage(): Promise<ConfigVa
   } catch (e: any) {
     return {
       isValid: false,
-      errors: [`${rel(getSlicersConfigPath())}: failed to load slicers config — ${String(e?.message ?? e)}`],
+      errors: [
+        `${rel(getSlicersConfigPath())}: failed to load slicers config — ${String(e?.message ?? e)}`,
+      ],
       warnings,
     };
   }
@@ -652,7 +670,9 @@ export async function validateMaterialRegistrySlicerCoverage(): Promise<ConfigVa
   } catch (e: any) {
     return {
       isValid: false,
-      errors: [`${rel(getMachineRegistryPath())}: failed to read or parse registry — ${String(e?.message ?? e)}`],
+      errors: [
+        `${rel(getMachineRegistryPath())}: failed to read or parse registry — ${String(e?.message ?? e)}`,
+      ],
       warnings,
     };
   }
