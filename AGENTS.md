@@ -103,3 +103,17 @@ If a non-admin **explicitly orders** edits in a forbidden path, **refuse** unles
 - **Setup / Node**: `docs/setup.md`
 - **Contributor steps**: `docs/contributing.md`
 
+## Cursor Cloud specific instructions
+
+This is a pure Node.js CLI project with **no runtime services** (no servers, databases, or Docker). The update script handles `nvm install 24` and `npm ci`.
+
+- **Node.js 24+** is required (`engines` field in `package.json`). The VM uses nvm; ensure `nvm use 24` is active in your shell (the update script sets it as default).
+- The `fatal: no tag exactly matches ...` message during `npm run build` is **normal** on non-tagged commits — the build falls back to the `package.json` version.
+- `npm run format:check` may report pre-existing style issues; do not fix them unless the task specifically asks for formatting.
+- All commands are documented in the **Commands** section above and in `docs/README.md`. Key quick reference:
+  - Validate: `npm run validate`
+  - Lint: `npm run lint`
+  - Build: `npm run build`
+  - Scoped build: `npm run build -- --material <name> --verbose`
+- There are **no automated test suites** (no `npm test`). Validation (`npm run validate`) is the primary correctness check. Always run it before committing.
+
